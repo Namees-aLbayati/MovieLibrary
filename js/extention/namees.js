@@ -5,10 +5,24 @@ var containerEl=document.getElementById('cardContainer')
 var reviewsTest=document.getElementById('reviews')
 var key1="k_w2ss88gw";
 const key2="k_kk9ovx21";
+var secretKeper=[];
 const NewArr=[]
+const userRatingArr=[];
 var result;
 function createCards(cardsData){
-    console.log('card data',cardsData)
+    const fetchID=fetch(`https://imdb-api.com/en/API/UserRatings/k_w2ss88gw/${cardsData.id}`).then((result)=>result.json()).then((usefulData)=>{
+        
+    if(usefulData.title!=null){
+userRatingArr.push(usefulData)
+    }
+    
+
+    console.log('userRating ARRAY',userRatingArr)
+    for(var i=0;i<userRatingArr.length;i++){
+
+    }
+
+})
     var row=document.createElement('div');
     row.classList.add('col-sm-6')
     var parent=document.createElement('div');
@@ -30,17 +44,25 @@ var modalBtn=document.createElement('a');
 // modalBtn.classList.add('btn', 'btn-danger', 'show-info-button');
 var data=cardsData.title;
 var mySplit=data.split(" ");
-console.log('split',mySplit)
+// console.log('split',mySplit)
 modalBtn.setAttribute('modalId',cardsData.id)
 modalBtn.setAttribute('data-toggle', 'modal');
 modalBtn.setAttribute('data-target', '#exampleModalCenter');
 
-modalBtn.textContent = `Read more about ${mySplit[0]}`;
+modalBtn.textContent = `Read more about ${mySplit}`;
 
+var space=document.createElement('br');
+
+var addToWatchingList=document.createElement('a');
+addToWatchingList.textContent='add to watch later '
+
+var tryId=document.getElementById('appendId');
 divTitle.appendChild(header)
 divTitle.appendChild(description)
-
+console.log('secretttttttttttttt',secretKeper)
 divTitle.appendChild(modalBtn)
+divTitle.appendChild(space)
+divTitle.appendChild(addToWatchingList)
 parent.appendChild(cardImg)
 parent.appendChild(divTitle)
 row.appendChild(parent)
