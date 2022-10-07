@@ -3,6 +3,7 @@ var searchReq=document.getElementById('form-control');
 var searchBtn=document.getElementById('search-btn');
 var containerEl=document.getElementById('cardContainer')
 var reviewsTest=document.getElementById('reviews')
+var getId;
 var key1="k_w2ss88gw";
 const key2="k_kk9ovx21";
 var secretKeper=[];
@@ -10,19 +11,14 @@ const NewArr=[]
 const userRatingArr=[];
 var result;
 function createCards(cardsData){
-    const fetchID=fetch(`https://imdb-api.com/en/API/UserRatings/k_w2ss88gw/${cardsData.id}`).then((result)=>result.json()).then((usefulData)=>{
-        
-    if(usefulData.title!=null){
-userRatingArr.push(usefulData)
-    }
+//     const fetchID=fetch(`https://imdb-api.com/en/API/UserRatings/k_w2ss88gw/${cardsData.id}`)
+//     .then((result)=>result.json())
+//     .then((usefulData)=>{
+// console.log('check this namees',usefulData)
     
-
-    console.log('userRating ARRAY',userRatingArr)
-    for(var i=0;i<userRatingArr.length;i++){
-
-    }
-
-})
+// })
+var arrow=document.getElementById('arrow');
+arrow.classList.toggle('display:inline')
     var row=document.createElement('div');
     row.classList.add('col-sm-6')
     var parent=document.createElement('div');
@@ -36,8 +32,9 @@ var divTitle=document.createElement('div');
 divTitle.classList.add('card-body');
 var header=document.createElement('p');
 header.classList.add('card-title');
-header.textContent=cardsData.title;
+header.textContent=`Movie Name:${cardsData.title}`;
 var description=document.createElement('p');
+
 description.classList.add('card-text');
 description.textContent=cardsData.description;
 var modalBtn=document.createElement('a');
@@ -51,16 +48,73 @@ modalBtn.setAttribute('data-target', '#exampleModalCenter');
 
 modalBtn.textContent = `Read more about ${mySplit}`;
 
+
+
+modalBtn.addEventListener('click',(event)=>{
+getId=event.target.getAttribute('modalId');
+    var myPix = new Array("./2.jpeg ", "./4.jpeg",'./3.jpeg');
+
+    var randomNum = Math.floor(Math.random() * myPix.length);
+
+console.log('picture',randomNum)
+    const fetchID=fetch(`https://imdb-api.com/API/FullCast/k_w2ss88gw/${getId}`)
+    .then((result)=>result.json())
+    .then((usefulData)=>{
+        var modalTitle=document.getElementById('titleId');
+        modalTitle.textContent=`${usefulData.title}`
+console.log('check this namees',usefulData)
+    
+if(usefulData.title != null){
+   console.log('its not null at all') 
+
+const modalContainer=document.getElementById('IdforTry');
+const cardDiv1=document.createElement('div');
+cardDiv1.classList.add('card');
+
+const cardName=document.createElement('h1');
+cardName.classList.add('text-center');
+cardName.textContent=`name will be here`;
+const imageModal=document.createElement('img');
+imageModal.src=`${myPix[randomNum]}`
+cardDiv1.appendChild(cardName)
+cardDiv1.appendChild(imageModal)
+modalContainer.appendChild(cardDiv1)
+
+
+}else{
+    console.log('its null here buddy')
+}
+
+
+
+
+})
+
+
+
+})
 var space=document.createElement('br');
 
 var addToWatchingList=document.createElement('a');
 addToWatchingList.textContent='add to watch later '
+addToWatchingList.setAttribute("localId",cardsData.id);
+
+
+addToWatchingList.addEventListener('click',(event)=>{
+    var id2=event.target.getAttribute('localId');
+
+// const getIdforLocal=event.target.getAttribute(modalId);
+console.log('local stirage id',id2)
+localStorage.setItem('movieRam',id2)
+
+})
+
 
 var tryId=document.getElementById('appendId');
 divTitle.appendChild(header)
 divTitle.appendChild(description)
 console.log('secretttttttttttttt',secretKeper)
-divTitle.appendChild(modalBtn)
+// divTitle.appendChild(modalBtn)
 divTitle.appendChild(space)
 divTitle.appendChild(addToWatchingList)
 parent.appendChild(cardImg)
