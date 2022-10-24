@@ -1,4 +1,8 @@
 
+//trying to add arrow at upper of card to moveing to index2 and tried to toggle the color
+
+
+
 var searchReq=document.getElementById('form-control');
 var searchBtn=document.getElementById('search-btn');
 var containerEl=document.getElementById('cardContainer')
@@ -18,7 +22,9 @@ function createCards(cardsData){
     
 // })
 var arrow=document.getElementById('arrow');
-arrow.classList.toggle('display:inline')
+
+
+
     var row=document.createElement('div');
     row.classList.add('col-sm-6')
     var parent=document.createElement('div');
@@ -106,6 +112,7 @@ addToWatchingList.addEventListener('click',(event)=>{
 // const getIdforLocal=event.target.getAttribute(modalId);
 console.log('local stirage id',id2)
 localStorage.setItem('movieRam',id2)
+window.location.href = "index2.html";
 
 })
 
